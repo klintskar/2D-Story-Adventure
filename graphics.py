@@ -174,6 +174,10 @@ def draw_choose_path():
 
 def graphics():
     
+    pygame.mixer.init()
+    pygame.mixer.music.load("game_music.wav")
+    pygame.mixer.music.play(-1)
+    
     clock = pygame.time.Clock()
     run = True
     global key_pressed
