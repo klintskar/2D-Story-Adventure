@@ -16,18 +16,17 @@ FPS = 30
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 CHARACTERINDEX = 0
-spriteimage = "idle.png"
 start = time.time()
 keystart = time.time()
 keys_pressed = None
-textbox = ["{Man} Once upon a time there was a lovely princess. But she had an enchantment upon her of a fearful sort which could only be broken by love's first kiss. She was locked away in a castle guarded by a terrible fire-breathing dragon. Many brave knigts had attempted to free her from this dreadful prison, but non prevailed. She waited in the dragon's keep in the highest room of the tallest tower for her true love and true love's first kiss. {Laughing} Like that's ever gonna happen. {Paper Rusting, Toilet Flushes} What a load of - ", "Hejsan Svejsan", "Hejdå"]
+textbox = []
 textboxindex = 0
 currentlocationx = 1
 currentlocationy = 1
 ########################################################################################
 # Spritesheets
-idle = pygame.image.load(spriteimage).convert_alpha()
-idle_sprite_sheet = spritesheet.SpriteSheet(idle)
+spritesheetimage = None
+sprite_sheet = None
 
 ########################################################################################
 # Commonly used window functions
@@ -56,44 +55,71 @@ def listinlist(list,index):
 
 # Function to switch map location
 def location_switch():
+    global textboxindex
     global keystart
     global currentlocationx
     global currentlocationy
     keys_pressed = pygame.key.get_pressed()
     keynow = time.time()
+    i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
     if keys_pressed[pygame.K_UP] and (keystart + 0.25) < (keynow):
-        i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
         if i[1]:
             currentlocationy -= 1
+            fade()
+            textboxindex = 0
         keystart = time.time()
     elif keys_pressed[pygame.K_RIGHT] and (keystart + 0.25) < (keynow):
-        i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
         if i[2]:
             currentlocationx += 1
+            fade()
+            textboxindex = 0
         keystart = time.time()
     elif keys_pressed[pygame.K_DOWN] and (keystart + 0.25) < (keynow):
-        i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
         if i[3]:
             currentlocationy += 1
+            fade()
+            textboxindex = 0
         keystart = time.time()
     elif keys_pressed[pygame.K_LEFT] and (keystart + 0.25) < (keynow):
-        i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
         if i[4]:
             currentlocationx -= 1
+            fade()
+            textboxindex = 0
         keystart = time.time()
+
+def update_spritesheet():
+    global spritesheetimage
+    global sprite_sheet
+    i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
+    spritesheetimage = pygame.image.load(i[12]).convert_alpha()
+    sprite_sheet = spritesheet.SpriteSheet(spritesheetimage)
 
 ########################################################################################
 # Specific draw textbox window functions
 
 # Main function for textbox window
 def draw_text_window():
-    location_switch()
+    global textbox
+    i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
+    textbox = listinlist(i,11)
+    update_spritesheet()
     next_text()
     draw_background()
-    update_animate(information.wizardidle)
-    draw_character(idle_sprite_sheet, information.wizardidle)
+    update_animate(listinlist(i,13))
+    draw_character(sprite_sheet, listinlist(i,13))
     draw_textbox(textbox[textboxindex])
+    location_switch()
     pygame.display.update()
+
+# Fake version for fade (runs smoother)
+def fake_draw_text_window():
+    global textbox
+    i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
+    textbox = listinlist(i,11)
+    update_spritesheet()
+    draw_background()
+    draw_character(sprite_sheet, listinlist(i,13))
+    draw_textbox(textbox[textboxindex])
 
 def draw_textbox(text):
     font = pygame.font.SysFont('Comic Sans MS', 30)
@@ -138,7 +164,7 @@ def blit_text(surface, text, pos, font, color=pygame.Color('white')):
         x = pos[0]  # Reset the x.
         y += word_height  # Start on new row.
 
-# These 2 functions update the text shown in the textbox
+# These 2 functions updates the text shown in the textbox
 def next_text():
     global keystart
     keys_pressed = pygame.key.get_pressed()
@@ -169,7 +195,55 @@ def draw_choose_path():
     location_switch()
     pygame.display.update()
 
+# Fake version for fade (runs smoother)
+def fake_draw_choose_path():
+    draw_background()
+
 ########################################################################################
+
+def fade():
+    fade_in_screen()
+    fade_out_screen()
+
+def fade_in_screen():
+    i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
+    fade = i[10]
+    fade = pygame.transform.scale(fade, (WINWIDTH, WINHEIGHT))
+    first = time.time()
+    x = 10
+    while x <= 100:
+        now = time.time()
+        if (now) >= (first + 0.1):
+            first = now
+            fade.set_alpha(x)
+            WIN.blit(fade, (0, 0))
+            pygame.display.update()
+            x = x + 10
+
+def fade_out_screen():
+    i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
+    fade = i[10]
+    fade = pygame.transform.scale(fade, (WINWIDTH, WINHEIGHT))
+    x = 400
+    first = time.time()
+    a = i[9]
+    if a == "textbox":
+        fake_draw_text_window()
+    if a == "path":
+        fake_draw_choose_path()  
+    picture = WIN.copy()
+    while x > 0:
+        now = time.time()
+        if now >= (first + 0.1):
+            WIN.blit(picture, (0, 0))
+            fade.set_alpha(x)
+            WIN.blit(fade, (0, 0))
+            pygame.display.update()
+            x = x - 20
+            first = now
+
+########################################################################################
+
 # Pygame start function
 
 def graphics():
@@ -177,12 +251,13 @@ def graphics():
     pygame.mixer.init()
     pygame.mixer.music.load("game_music.wav")
     pygame.mixer.music.play(-1)
-    
+
     clock = pygame.time.Clock()
     run = True
     global key_pressed
     
     while run:
+
         clock.tick(FPS)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -193,9 +268,10 @@ def graphics():
         if keys_pressed[pygame.K_ESCAPE]:
             pygame.quit()
         elif keys_pressed[pygame.K_w]:
-            pass
+            fade()
         
         i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
+
         if i[9] == "textbox":
             draw_text_window()
         if i[9] == "path":
