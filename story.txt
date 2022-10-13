@@ -1,0 +1,55 @@
+Once upon a time there existed a great civilization. Built together by many nations that forged bonds and made this utopia for all living things. It was a time of peace wonder and innovation.  But then he came. A necromancer who swore to tear down the civilization. He stayed by himself deep within a cave but used skeletons to do his bidding. Thus slowly this civilization was torn apart by armies of undead. The survivors had to flee, and as time went by all knowledge was forgotten and all living beings were scattered across the lands. Until a group emerged. The archaeologists that swore to uncover the forgotten mysteries of this forgotten civilization. But the necromancer has killed them all. You are the only one left. It is up to you to defeat him and it is up to you to uncover the truths of the forgotten civilization.
+
+You stand outside of the crypt, the crescent moon shines alongside the scattered stars all shining among the cascading night sky.  As a cold breeze wafts by, it flutters your coat all the while sending a chill through your spine. You take a step front gripping the pickaxe firmly in one hand and a map your belt satchel in the other. You enter.
+
+Special rooms-
+
+	1. AS you have taken the first step into the crypt, you stare in too the deep darkness in front of you. You bring out your torch quickly lightning it with the flint and steel that you keep securely in your satchel. The torch grows slowly revealing a roughly dug out cavern stretching deep into the darkness Infront of you.
+
+
+Resting places-
+4.4 As you keep walking suddenly the air changes. The suffocating queasy air suddenly transforms into a damp fresh air that fills your lungs with comfort. In the corner you see a small reservoir of water made from a small current of water from a crack in the rocky cavern, that cascades creating this pool. Suddenly you see a shadow in the corner. Startled you step back quickly grabbing your pickaxe. 
+
+"Sorry did not mean to startle you, i mean you no harm"
+
+He steps out of the shadow revealing a comically large hat fitted on a old man. He steps slowly front crutching his staff The staff carries a small prismatic ruby at the top that shimmers rays of light across the room.  The man has a grey twirly ungroomed beard covering most of his face. He wears a long robe that wraps effectively around his thin physique . He looks at you with one eye closed and the other one giving a focused stare at you through a monocle. 
+
+"It was long ago i saw anyone in these caverns. Specially one from your group. It is a pleasure i am Elthazar. "
+
+Dialogue options-Elthazar the wizard
+Why are you here?-
+I heard that there is a special emerald in these caverns. It would be a perfect catalyst for one of my spells. If you bring it to me i would make sure to reward you. 
+How long have these caves been abandoned?-
+Many used to venture through here. That was little under 15 years ago. Years after year the amount of exploring of these caverns grew sparser. Now its just you... And well me too. And some druid who lives somewhere. 
+Leave-
+Goodluck now. I hope to see you again, hopefully in one piece.
+
+Tired and exhausted you decide to take a soak in the water. You get out feeling refreshed and full of energy(hp restored)
+
+8.2 You see a smaller opening. Shedding some light inside you find what looks to be an abandoned, old camp. On the ground you see a fireplace that has been put out since long. In the corner a smaller mattress covered in dust and looks very old. Better than sleeping on the ground. 
+
+
+Tired and exhausted you decide to sleep on the mattress. You wake up feeling refreshed and full of energy(hp restored)
+
+11.1 As you enter this new cavernous opening you see a colour that surprises you. Green. This whole cave. Grass envelopes, and cushioning you as you take each step. Flowers, and small bushed carrying berries decorate the cave. Even the limestone walls are covered with green and yellow moss. Suddenly you see the grass shuffeling. You see a old lady sleeping. She has green hair and branches sticking out of her forhead shaping almost like antlers. Her clothes are made from fur moss and bark. She yawns and opens her eyes and sees you.
+
+Mui-"ah seems like i have a visitor"
+You- "sorry, i did not wish to intrude"
+Mui- "nonsense, you are most welcome here in my home,  i am Mui the druid"
+ dialogue options-
+Why do you live here?
+"Well someone has to make sure the skeletons don't leave this cave, otherwise they would cause even more havoc and problems than they have caused"
+"-----"
+
+
+Dead ends--
+
+Normal caverns--
+ a. The cavern stretches deep. In the corner you see drops of water slowly dripping from the rocky down into a small puddle. Each drop sending a ripple out into the puddle whilst echoing through the cavern.
+ b. Shining your torch into this expanse of darkness reveals the stalagmites hanging down from the high ceiling. The walls made from yellowish brown rock. You take your flint scratching the walls. It leaves a white line. Limestone.
+	C. You carefully step into the next cavern opening not knowing what would be awaiting you. As you look around nothing. Just an empty cavern.
+	D. You step into the next cavern. Careful once again. Once again the only thing in this room would be you. And emptiness. And dust, a lot of it.
+
+Fights--skeletons, giant skeleton, basilisk, necromancer. 
+Items-- potions, elthazars magic bombs,
+
