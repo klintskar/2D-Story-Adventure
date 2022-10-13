@@ -26,7 +26,7 @@ rubbish4 = []
 north = []
 south = []
 wizard = [pygame.image.load("background1.png"),False,True,False,False,"","Conversation over","","","textbox",pygame.image.load("fade.png"),wizardtext,"idle.png",wizardidle]
-east = [pygame.image.load("woods.png"),False,False,False,True,"North","East","South","Start","path"]
+east = [pygame.image.load("woods.png"),False,False,False,True,"North","East","South","Start","path","path",pygame.image.load("fade.png")]
 start = [pygame.image.load("pathbackground.jpg"),False,True,False,True,"North","East","South","Wizard","path",pygame.image.load("fade.png")]
 
 map = [[rubbish1,north,rubbish2],
