@@ -23,10 +23,20 @@ textbox = []
 textboxindex = 0
 currentlocationx = 1
 currentlocationy = 1
+player ={"hp":10,"dmg":1}
 ########################################################################################
 # Spritesheets
 spritesheetimage = None
 sprite_sheet = None
+
+########################################################################################
+
+def player_hp():
+    heart = pygame.image.load(information.heart).convert_alpha()
+    heart_sprite = spritesheet.SpriteSheet(heart)
+    heart = heart_sprite.get_image(0, 0, 778, 594, (1/10), (255, 255, 255))
+    for x in range (player["hp"]):
+        WIN.blit(heart, (5+((x)*80),5))
 
 ########################################################################################
 # Commonly used window functions
@@ -192,15 +202,35 @@ def update_text():
 
 def draw_choose_path():
     draw_background()
+    player_hp()
+    path_objects()
     location_switch()
     pygame.display.update()
 
 # Fake version for fade (runs smoother)
 def fake_draw_choose_path():
     draw_background()
+    player_hp()
+    path_objects()
+
+# Ritar alla object vi har plaserat på bakgrunden
+def path_objects():
+    i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
+    if not listinlist(i,11):
+        pass
+    else:
+        for x in range(len(listinlist(i,11))):
+            if x%2 == 0:
+                a = listinlist(i,11)
+                object = pygame.image.load(a[x]).convert_alpha()
+                object_sprite = spritesheet.SpriteSheet(object)
+                object = object_sprite.get_image(0, 0, 208, 288, 1, (255, 255, 255))
+                tuple = listinlist(a,x+1)
+                WIN.blit(object, (tuple[0]*WINWIDTH, tuple[1]*WINHEIGHT-32))
 
 ########################################################################################
 
+# Fadar in en bild på skärmen och sedan fadar ut den samtidigt som scenen byts
 def fade():
     fade_in_screen()
     fade_out_screen()
@@ -210,7 +240,7 @@ def fade_in_screen():
     fade = i[10]
     fade = pygame.transform.scale(fade, (WINWIDTH, WINHEIGHT))
     first = time.time()
-    x = 10
+    x = 0
     while x <= 100:
         now = time.time()
         if (now) >= (first + 0.1):
@@ -218,7 +248,7 @@ def fade_in_screen():
             fade.set_alpha(x)
             WIN.blit(fade, (0, 0))
             pygame.display.update()
-            x = x + 10
+            x = x + 20
 
 def fade_out_screen():
     i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
@@ -239,7 +269,7 @@ def fade_out_screen():
             fade.set_alpha(x)
             WIN.blit(fade, (0, 0))
             pygame.display.update()
-            x = x - 20
+            x = x - 40
             first = now
 
 ########################################################################################
@@ -269,6 +299,8 @@ def graphics():
             pygame.quit()
         elif keys_pressed[pygame.K_w]:
             fade()
+        elif keys_pressed[pygame.K_s]:
+            pass
         
         i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
 
