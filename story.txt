@@ -38,18 +38,25 @@ You- "sorry, i did not wish to intrude"
 Mui- "nonsense, you are most welcome here in my home,  i am Mui the druid"
  dialogue options-
 Why do you live here?
-"Well someone has to make sure the skeletons don't leave this cave, otherwise they would cause even more havoc and problems than they have caused"
-"-----"
+"Well someone has to make sure the skeletons don't leave this cave, otherwise they would create even more havoc and problems. They have done than enough of that.
+Leave-
+May you find what you are looking for...
 
-
-Dead ends--
 
 Normal caverns--
- a. The cavern stretches deep. In the corner you see drops of water slowly dripping from the rocky down into a small puddle. Each drop sending a ripple out into the puddle whilst echoing through the cavern.
+ A. The cavern stretches deep. In the corner you see drops of water slowly dripping from the rocky down into a small puddle. Each drop sending a ripple out into the puddle whilst echoing through the cavern.
  b. Shining your torch into this expanse of darkness reveals the stalagmites hanging down from the high ceiling. The walls made from yellowish brown rock. You take your flint scratching the walls. It leaves a white line. Limestone.
 	C. You carefully step into the next cavern opening not knowing what would be awaiting you. As you look around nothing. Just an empty cavern.
 	D. You step into the next cavern. Careful once again. Once again the only thing in this room would be you. And emptiness. And dust, a lot of it.
-
+	E. In this part of the cavern you can hear the wind whistling through the wind. The echoes of your footsteps reach far .The ground is made of uneven rock formations and your feet tire as you traverse.
+	F. The echoes of the cave are a given at this point and hearing them, you are unsure wether to feel comforted or if you feel discomfort. Either way you brave through.
 Fights--skeletons, giant skeleton, basilisk, necromancer. 
-Items-- potions, elthazars magic bombs,
+Items-- potions, elthazars magic bombs, herbs from druid?
+
+You hear a distant sound coming from further in the cavern. You step carefully patiently taking one step after the other. You see a figure ever so slightly moving as you start to go close and closer. 
+It notices you, watches you for a while.
+In a blink of an eye it rushes at you.
+"combat"
+
+
 
