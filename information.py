@@ -22,20 +22,43 @@ heart = "heart.png"
 # Alla object på våra maps och vart dom ligger plaserade
 startobjects = ["wizardpath.png",(0,0.5)]
 eastobjects = []
+combatobjects = []
 
 rubbish1 = []
 rubbish2 = []
 rubbish3 = []
 rubbish4 = []
 
+forestfadetext = ["Detta är en skog. Skogibogitog","Oj ett träd","Shit en kebab!"]
+startfadetext = []
+wizardfadetext = []
+combatfadetext = ["Nu ska du slåss mot ett skelet"]
+
+#Picture, HP, DMG, Name, kill function number
+skeleton = [pygame.image.load("skeleton.png"),10,1,"Skeleton",80085]
+
 # index 0 = bild, index 1-4 = om kan gå åt det hållet, index 5-8 namn för hållen, index 9 = information om området
 north = []
-south = []
-wizard = [pygame.image.load("background1.png"),False,True,False,False,"","Conversation over","","","textbox",pygame.image.load("fade.png"),wizardtext,"idle.png",wizardidle]
-east = [pygame.image.load("woods.png"),False,False,False,True,"North","East","South","Start","path",pygame.image.load("fade.png"),eastobjects]
-start = [pygame.image.load("pathbackground.jpg"),False,True,False,True,"North","East","South","Wizard","path",pygame.image.load("fade.png"),startobjects]
+combat = [pygame.image.load("background1.png"),True,False,False,False,"","","","","combat",pygame.image.load("fade.png"),combatfadetext,combatobjects,skeleton]
+wizard = [pygame.image.load("background1.png"),False,True,False,False,"","Conversation over","","","textbox",pygame.image.load("fade.png"),wizardfadetext,wizardtext,"idle.png",wizardidle]
+east = [pygame.image.load("woods.png"),False,False,False,True,"North","East","South","Start","path",pygame.image.load("fade.png"),forestfadetext,eastobjects]
+start = [pygame.image.load("pathbackground.jpg"),False,True,True,True,"North","East","Combat","Wizard","path",pygame.image.load("fade.png"),startfadetext,startobjects]
+
+def kill(number):
+       if number == 80085:
+              global combat
+              combat[9] = "path"
 
 # Kartan
 map = [[rubbish1,north,rubbish2],
        [wizard,start,east],
-       [rubbish3,south,rubbish4]]
+       [rubbish3,combat,rubbish4]]
+mapcheckpoint = []
+
+def save_checkpoint():
+       global mapcheckpoint
+       mapcheckpoint = map.copy()
+
+def load_checkpoint():
+       global map
+       map = mapcheckpoint
