@@ -4,17 +4,21 @@ pygame.init()
 FPS=15
 fpsClock = pygame.time.Clock()
 WIDTH, HEIGHT = WIN.get_size()
-
+xpos=0
+ypos=0
 WHITE=(255,255,255)
+
 
 position1=((WIDTH/HEIGHT)*60,(WIDTH/HEIGHT)*95)
 position2=((WIDTH/HEIGHT)*165,(WIDTH/HEIGHT)*95)
 position3=((WIDTH/HEIGHT)*275,(WIDTH/HEIGHT)*95)
 position4=((WIDTH/HEIGHT)*380,(WIDTH/HEIGHT)*95)
+
 position5=((WIDTH/HEIGHT)*60,(WIDTH/HEIGHT)*170)
 position6=((WIDTH/HEIGHT)*165,(WIDTH/HEIGHT)*170)
 position7=((WIDTH/HEIGHT)*275,(WIDTH/HEIGHT)*170)
 position8=((WIDTH/HEIGHT)*380,(WIDTH/HEIGHT)*170)
+
 position9=((WIDTH/HEIGHT)*60,(WIDTH/HEIGHT)*247)
 position10=((WIDTH/HEIGHT)*165,(WIDTH/HEIGHT)*247)
 position11=((WIDTH/HEIGHT)*275,(WIDTH/HEIGHT)*247)
@@ -34,65 +38,44 @@ pos10move=[position6,position11,position2,position9]
 pos11move=[position7,position12,position3,position10]
 pos12move=[position8,position9,position4,position11]
 
-rapier=[2,"dagger", "dagger.png", "nonconsumable"]
-sword=[5, "sword", "sword.png", "nonconsumable"]
-axe=[4, "axe", "axe.png", "nonconsumable"]
-pickaxe=[3, "pickaxe", "pickaxe.png", "nonconsumable"]
-chainmail=[2, "chainmail", "chainmail.png","nonconsumable"]
-splint=[3, "splint", "splint.png","nonconsumable"]
-halfplatearmor=[4,"half plate armor","halfplatearmor.png", "nonconsumable"]
-platearmor=[5, "plate armor","platearmor.png", "nonconsumable"]
-elthezarsbomb=[6, "elthezars bomb","elthezarsbomb.png","consumable"]
-healthpotion=[8, "health potion","healthpotion.png", "consumable"]
-orange=[2, "orange","orange.png", "consumable"]
-healthvial=[5,"health vial", "healthvial.png","consumable"]
+dagger=[2,"dagger", pygame.image.load("dagger.png"), "nonconsumable"]
+sword=[5, "sword", pygame.image.load("sword.png"), "nonconsumable"]
+axe=[4, "axe", pygame.image.load("axe.png"), "nonconsumable"]
+pickaxe=[3, "pickaxe", pygame.image.load("pickaxe.png"), "nonconsumable"]
+chainmail=[2, "chainmail", pygame.image.load("chainmail.png"),"nonconsumable"]
+splint=[3, "splint", pygame.image.load("splint.png"),"nonconsumable"]
+halfplatearmor=[4,"half plate armor",pygame.image.load("halfplatearmor.png"), "nonconsumable"]
+platearmor=[5, "plate armor",pygame.image.load("platearmor.png"), "nonconsumable"]
+elthezarsbomb=[6, "elthezars bomb",pygame.image.load("elthezarsbomb.png"),"consumable"]
+healthpotion=[8, "health potion",pygame.image.load("healthpotion.png"), "consumable"]
+orange=[2, "orange",pygame.image.load("orange.png"), "consumable"]
+healthvial=[5,"health vial", pygame.image.load("healthvial.png"),"consumable"]
 empty="empty"
-#[position, name, image, consumable/nonconsumable, amount]
-slot1=[position1,empty,empty,empty,0]
-slot2=[position2,empty,empty,empty,0]
-slot3=[position3,empty,empty,empty,0]
-slot4=[position4,empty,empty,empty,0]
-slot5=[position5,empty,empty,empty,0]
-slot6=[position6,empty,empty,empty,0]
-slot7=[position7,empty,empty,empty,0]
-slot8=[position8,empty,empty,empty,0]
-slot9=[position9,empty,empty,empty,0]
-slot10=[position10,empty,empty,empty,0]
-slot11=[position11,empty,empty,empty,0]
-slot12=[position12,empty,empty,empty,0]
+#[position, value,name, image, consumable/nonconsumable, amount]
+slot1=[position1,empty,empty,empty,empty,0]
+slot2=[position2,empty,empty,empty,empty,0]
+slot3=[position3,5,"health vial", pygame.image.load("healthvial.png"),"consumable",0]
+slot4=[position4,empty,empty,empty,empty,0]
+slot5=[position5,empty,empty,empty,empty,0]
+slot6=[position6,empty,empty,empty,empty,0]
+slot7=[position7,empty,empty,empty,empty,0]
+slot8=[position8,empty,empty,empty,empty,0]
+slot9=[position9,empty,empty,empty,empty,0]
+slot10=[position10,empty,empty,empty,empty,0]
+slot11=[position11,empty,empty,empty,empty,0]
+slot12=[position12,empty,empty,empty,empty,0]
 
 items=[slot1[1],slot2[1],slot3[1],slot4[1]]
 itemposition=[slot1[0],slot2[0],slot3[0],slot4[0]]
-
+inventorylist=[[slot1,slot2, slot3, slot4],
+               [slot5,slot6,slot7,slot8],
+               [slot9,slot10,slot11,slot12]]
 
 #items:
 WINWIDTH, WINHEIGHT = WIN.get_size()
 inv=pygame.image.load("inventory.png")
 inv= pygame. transform. scale(inv,(WIDTH,HEIGHT))
-dagger=pygame.image.load("dagger.png")
-dagger= pygame. transform. scale(dagger,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-sword=pygame.image.load("sword.png")
-sword= pygame. transform. scale(sword,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-axe=pygame.image.load("axe.png")
-axe= pygame. transform. scale(axe,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-pickaxe=pygame.image.load("pickaxe.png")
-pickaxe= pygame. transform. scale(pickaxe,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-chainmail=pygame.image.load("chainmail.png")
-chainmail= pygame. transform. scale(chainmail,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-splint=pygame.image.load("splint.png")
-splint= pygame. transform. scale(splint,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-halfplatearmor=pygame.image.load("halfplatearmor.png")
-halfplatearmor= pygame. transform. scale(halfplatearmor,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-platearmor=pygame.image.load("platearmor.png")
-platearmor= pygame. transform. scale(platearmor,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-elthezarsbomb=pygame.image.load("elthezarsbomb.png")
-elthezarsbomb= pygame. transform. scale(elthezarsbomb,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-healthvial=pygame.image.load("healthvial.png")
-healthvial= pygame. transform. scale(healthvial,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-healthpotion=pygame.image.load("healthpotion.png")
-healthpotion= pygame. transform. scale(healthpotion,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
-orange=pygame.image.load("orange.png")
-orange= pygame. transform. scale(orange,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
+
 invstat=pygame.image.load("invstat.png")
 invstat1=pygame.image.load("invstat.png")
 invstat= pygame. transform. scale(invstat,((WIDTH/HEIGHT)*320,(WIDTH/HEIGHT)*385))
@@ -102,7 +85,7 @@ redbox=pygame. transform. scale(redbox,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
 boxposition=position1
 def drawwindow(color):
     WIN.fill(color)
-def inventory(pos):
+def inventory():
     clock=pygame.time.Clock()
     clock.tick(FPS)
     open=True
@@ -110,23 +93,32 @@ def inventory(pos):
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
                 open=False
-            WIN.blit(inv,(0,0))
-            WIN.blit(sword, (position9))
-            WIN.blit(healthpotion, position10)
-            WIN.blit(orange, position3)
-            WIN.blit(invstat, (825,165))
-            WIN.blit(invstat1, (80,570))
-            WIN.blit(redbox,pos)
-            pygame.display.flip()
-            keys_pressed = pygame.key.get_pressed()
-            if keys_pressed[pygame.K_UP]:#up
-                move(pos,"up")
-            if keys_pressed[pygame.K_RIGHT]:
-                move(pos,"right")
-            if keys_pressed[pygame.K_RIGHT]:
-                move(pos,"down")
-            if keys_pressed[pygame.K_RIGHT]:
-                move(pos,"left")
+            drawinventory()
+def drawslot():
+    for y in range(3):
+        for x in range(4):
+            i=listinlist(listinlist(inventorylist,y),x)
+            if i[3]!=empty:
+                image=i[3]
+                image=pygame.transform.scale(image,((WIDTH/HEIGHT)*70,(WIDTH/HEIGHT)*70))
+                WIN.blit(image, i[0])
+def drawinventory():
+    i=listinlist(listinlist(inventorylist,ypos),xpos)
+    WIN.blit(inv,(0,0))
+    WIN.blit(invstat, (825,165))
+    WIN.blit(invstat1, (80,570))
+    WIN.blit(redbox,i[0])
+    keys_pressed = pygame.key.get_pressed()
+    if keys_pressed[pygame.K_UP]:#up
+        move("up")
+    if keys_pressed[pygame.K_RIGHT]:
+        move("right")
+    if keys_pressed[pygame.K_RIGHT]:
+        move("down")
+    if keys_pressed[pygame.K_RIGHT]:
+        move("left")
+    pygame.display.flip()
+    drawslot()
 def store(slot,pickedupitem):
     slot[1]=pickedupitem[1]
     slot[2]=pickedupitem[2]
@@ -191,164 +183,21 @@ def getitem(pickedupitem):
             if x==12:
                 store(slot12,pickedupitem)
     x=x+1
+    
+def listinlist(list,index):
+    return list[index]
 
-def move(pos,direction):
-    if boxposition==position1:
-        if direction=="up":
-            boxposition==pos1move[0]
-            inventory(pos1move[0])
-        elif direction=="right":
-            inventory(pos1move[1])
-            boxposition==pos1move[1]
-        elif direction=="down":
-            inventory(pos1move[2])
-            boxposition==pos1move[2]
-        elif direction=="left":
-            inventory(pos1move[3])
-            boxposition==pos1move[3]
-    if boxposition==position2:
-        if direction=="up":
-            inventory(pos2move[0])
-            boxposition==pos2move[0]
-        elif direction=="right":
-            inventory(pos2move[1])
-            boxposition==pos2move[1]
-        elif direction=="down":
-            inventory(pos2move[2])
-            boxposition==pos2move[2]
-        elif direction=="left":
-            inventory(pos2move[3])
-            boxposition==pos2move[3]
-    if boxposition==position3:
-        if direction=="up":
-            inventory(pos3move[0])
-            boxposition==pos3move[0]
-        elif direction=="right":
-            inventory(pos3move[1])
-            boxposition==pos3move[1]
-        elif direction=="down":
-            inventory(pos3move[2])
-            boxposition==pos3move[2]
-        elif direction=="left":
-            inventory(pos3move[3])
-            boxposition==pos3move[3]
-    if boxposition==position4:
-        if direction=="up":
-            inventory(pos4move[0])
-            boxposition==pos4move[0]
-        elif direction=="right":
-            inventory(pos4move[1])
-            boxposition==pos4move[1]
-        elif direction=="down":
-            inventory(pos4move[2])
-            boxposition==pos4move[2]
-        elif direction=="left":
-            inventory(pos4move[3])
-            boxposition==pos4move[3]
-    if boxposition==position5:
-        if direction=="up":
-            inventory(pos5move[0])
-            boxposition==pos5move[0]
-        elif direction=="right":
-            inventory(pos5move[1])
-            boxposition==pos5move[1]
-        elif direction=="down":
-            inventory(pos5move[2])
-            boxposition==pos5move[2]
-        elif direction=="left":
-            inventory(pos5move[3])
-            boxposition==pos5move[3]
-    if boxposition==position6:
-        if direction=="up":
-            inventory(pos6move[0])
-            boxposition==pos6move[0]
-        elif direction=="right":
-            inventory(pos6move[1])
-            boxposition==pos6move[1]
-        elif direction=="down":
-            inventory(pos6move[2])
-            boxposition==pos6move[2]
-        elif direction=="left":
-            inventory(pos6move[3])
-            boxposition==pos6move[3]
-    if boxposition==position7:
-        if direction=="up":
-            inventory(pos7move[0])
-            boxposition==pos7move[0]
-        elif direction=="right":
-            inventory(pos7move[1])
-            boxposition==pos7move[1]
-        elif direction=="down":
-            inventory(pos7move[2])
-            boxposition==pos7move[2]
-        elif direction=="left":
-            inventory(pos7move[3])
-            boxposition==pos7move[3]
-    if boxposition==position8:
-        if direction=="up":
-            inventory(pos8move[0])
-            boxposition==pos8move[0]
-        elif direction=="right":
-            inventory(pos8move[1])
-            boxposition==pos8move[1]
-        elif direction=="down":
-            inventory(pos8move[2])
-            boxposition==pos8move[2]
-        elif direction=="left":
-            inventory(pos8move[3])
-            boxposition==pos8move[3]
-    if boxposition==position9:
-        if direction=="up":
-            inventory(pos9move[0])
-            boxposition==pos9move[0]
-        elif direction=="right":
-            inventory(pos9move[1])
-            boxposition==pos9move[1]
-        elif direction=="down":
-            inventory(pos9move[2])
-            boxposition==pos9move[2]
-        elif direction=="left":
-            inventory(pos9move[3])
-            boxposition==pos9move[3]
-    if boxposition==position10:
-        if direction=="up":
-            inventory(pos10move[0])
-            boxposition==pos10move[0]
-        elif direction=="right":
-            inventory(pos10move[1])
-            boxposition==pos10move[1]
-        elif direction=="down":
-            inventory(pos10move[2])
-            boxposition==pos10move[2]
-        elif direction=="left":
-            inventory(pos10move[3])
-            boxposition==pos10move[3]
-    if boxposition==position11:
-        if direction=="up":
-            inventory(pos11move[0])
-            boxposition==pos11move[0]
-        elif direction=="right":
-            inventory(pos11move[1])
-            boxposition==pos11move[1]
-        elif direction=="down":
-            inventory(pos11move[2])
-            boxposition==pos11move[2]
-        elif direction=="left":
-            inventory(pos11move[3])
-            boxposition==pos11move[3]
-    if boxposition==position1:
-        if direction=="up":
-            inventory(pos12move[0])
-            boxposition==pos12move[0]
-        elif direction=="right":
-            inventory(pos12move[1])
-            boxposition==pos12move[1]
-        elif direction=="down":
-            inventory(pos12move[2])
-            boxposition==pos12move[2]
-        elif direction=="left":
-            inventory(pos12move[3])
-            boxposition==pos12move[3]
+def move(direction):
+    global xpos
+    global ypos
+    if direction=="up":
+        ypos=ypos-1
+    if direction=="right":
+        xpos=xpos+1
+    if direction=="down":
+        ypos=ypos+1
+    if direction=="left":
+        xpos=xpos-1
     
 def remove(slot):
     slot[5]=slot[5]-1
@@ -385,5 +234,6 @@ def removeconsume():
             if x==12:
                 remove(slot12)      
         x=x+1
-print(WIDTH, HEIGHT)
-inventory(boxposition)
+
+inventory()
+
