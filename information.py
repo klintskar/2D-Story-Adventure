@@ -39,15 +39,16 @@ skeleton = [pygame.image.load("skeleton.png"),10,1,"Skeleton",80085]
 
 # index 0 = bild, index 1-4 = om kan gå åt det hållet, index 5-8 namn för hållen, index 9 = information om området
 north = []
-combat = [pygame.image.load("background1.png"),True,False,False,False,"","","","","combat",pygame.image.load("fade.png"),combatfadetext,combatobjects,skeleton]
+combat = [pygame.image.load("cell.png"),True,False,False,False,"","","","","combat",pygame.image.load("fade.png"),combatfadetext,combatobjects,skeleton]
 wizard = [pygame.image.load("background1.png"),False,True,False,False,"","Conversation over","","","textbox",pygame.image.load("fade.png"),wizardfadetext,wizardtext,"idle.png",wizardidle]
 east = [pygame.image.load("woods.png"),False,False,False,True,"North","East","South","Start","path",pygame.image.load("fade.png"),forestfadetext,eastobjects]
-start = [pygame.image.load("pathbackground.jpg"),False,True,True,True,"North","East","Combat","Wizard","path",pygame.image.load("fade.png"),startfadetext,startobjects]
+start = [pygame.image.load("pathbackground.png"),False,True,True,True,"North","East","Combat","Wizard","path",pygame.image.load("fade.png"),startfadetext,startobjects]
 
 def kill(number):
        if number == 80085:
               global combat
               combat[9] = "path"
+              combatfadetext = []
 
 # Kartan
 map = [[rubbish1,north,rubbish2],
