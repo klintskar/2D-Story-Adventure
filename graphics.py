@@ -1,4 +1,3 @@
-from cgitb import text
 import pygame
 import information
 import spritesheet
@@ -73,6 +72,11 @@ def player_hp():
         WIN.blit(heart, (5+((x)*80),5))
 
 ########################################################################################
+        
+        
+
+########################################################################################
+        
 # Combat
 enemyhp = 0
 firstcombat = True
@@ -152,7 +156,7 @@ def initiatecombat(enemy):
         load_checkpoint()
         
 def draw_combat():
-    draw_fade_background()
+    draw_background()
     player_hp()
     enemy_hp()
     load_enemy()
