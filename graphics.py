@@ -10,7 +10,7 @@ WIN = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 pygame.display.set_caption("Game Project")
 pygame.font.init()
 ########################################################################################
-font = pygame.font.SysFont('Comic Sans MS', 30)
+font = pygame.font.SysFont('Comic Sins MS', 30)
 WINWIDTH, WINHEIGHT = WIN.get_size()
 UGLYGREEN = (30, 50, 40)
 FPS = 30
@@ -24,7 +24,7 @@ textbox = []
 textboxindex = 0
 currentlocationx = 1
 currentlocationy = 1
-player ={"hp":10,"dmg":4}
+player = {"hp":10,"dmg":2,"armor":10}
 yesno = ""
 fadeyn = False
 fadetext = True
@@ -38,8 +38,8 @@ sprite_sheet = None
 # Checkpoints
 
 player_checkpoint = {}
-currentlocationx_checkpoint = 1
-currentlocationy_Checkpoint = 1
+currentlocationx_checkpoint = 0
+currentlocationy_Checkpoint = 0
 
 def save_checkpoint():
     information.save_checkpoint()
@@ -68,13 +68,253 @@ def player_hp():
     heart = pygame.image.load(information.heart).convert_alpha()
     heart_sprite = spritesheet.SpriteSheet(heart)
     heart = heart_sprite.get_image(0, 0, 778, 594, (1/10), (255, 255, 255))
-    for x in range (player["hp"]):
+    for x in range (int(player["hp"])):
         WIN.blit(heart, (5+((x)*80),5))
 
-########################################################################################
-        
-        
+def player_inventory():
+    my_font = pygame.font.SysFont('Comic Sans MS', int((WINWIDTH+WINHEIGHT)/100))
+    HP = my_font.render("HP: " + str(player["hp"]), False, (0, 0, 0))
+    DMG = my_font.render("DMG: " + str(player["dmg"]), False, (0, 0, 0))
+    ARMOR = my_font.render("ARMOR: " + str(player["armor"]), False, (0, 0, 0))
+    WIN.blit(HP, (WINWIDTH/2 + WINWIDTH/14, WINHEIGHT/4))
+    WIN.blit(DMG, (WINWIDTH/2 + WINWIDTH/14, 2*(WINHEIGHT/4)))
+    if player["dmg"] == 2:
+        image = information.dagger[2]
+        image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+        WIN.blit(image, (WINWIDTH/2 + WINWIDTH/14,(WINWIDTH+WINHEIGHT)/50 + 2*(WINHEIGHT/4)))
+    elif player["dmg"] == 3:
+        image = information.pickaxe[2]
+        image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+        WIN.blit(image, (WINWIDTH/2 + WINWIDTH/14,(WINWIDTH+WINHEIGHT)/50 + 2*(WINHEIGHT/4)))
+    elif player["dmg"] == 4:
+        image = information.axe[2]
+        image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+        WIN.blit(image, (WINWIDTH/2 + WINWIDTH/14,(WINWIDTH+WINHEIGHT)/50 + 2*(WINHEIGHT/4)))
+    elif player["dmg"] == 5:
+        image = information.sword[2]
+        image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+        WIN.blit(image, (WINWIDTH/2 + WINWIDTH/14,(WINWIDTH+WINHEIGHT)/50 + 2*(WINHEIGHT/4)))
 
+    WIN.blit(ARMOR, (WINWIDTH/2 + WINWIDTH/14, 3*(WINHEIGHT/4)))
+    if player["armor"] == 10:
+        image = information.chainmail[2]
+        image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+        WIN.blit(image, (WINWIDTH/2 + WINWIDTH/14,(WINWIDTH+WINHEIGHT)/50 + 3*(WINHEIGHT/4)))
+    elif player["armor"] == 20:
+        image = information.splint[2]
+        image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+        WIN.blit(image, (WINWIDTH/2 + WINWIDTH/14,(WINWIDTH+WINHEIGHT)/50 + 3*(WINHEIGHT/4)))
+    elif player["armor"] == 30:
+        image = information.halfplatearmor[2]
+        image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+        WIN.blit(image, (WINWIDTH/2 + WINWIDTH/14,(WINWIDTH+WINHEIGHT)/50 + 3*(WINHEIGHT/4)))
+    elif player["armor"] == 40:
+        image = information.platearmor[2]
+        image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+        WIN.blit(image, (WINWIDTH/2 + WINWIDTH/14,(WINWIDTH+WINHEIGHT)/50 + 3*(WINHEIGHT/4)))
+
+########################################################################################
+# Inventory code
+eating = False
+removing = False
+inventory = False
+
+xpos=0
+ypos=0
+
+inv=pygame.image.load("inventory.png")
+inv= pygame. transform. scale(inv,(WINWIDTH,WINHEIGHT))
+
+invstat=pygame.image.load("invstat.png")
+invstat1=pygame.image.load("invstat.png")
+invstat= pygame. transform. scale(invstat,(WINWIDTH*0.382,WINHEIGHT*0.79))
+invstat1=pygame. transform. scale(invstat,(WINWIDTH*0.488,WINHEIGHT*0.32))
+redbox=pygame.image.load("redbox.png")
+redbox=pygame.transform.scale(redbox,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+
+def fake_drawinventory():
+    i=listinlist(listinlist(information.inventorylist,ypos),xpos)
+    WIN.blit(inv,(0,0))
+    WIN.blit(invstat, ( WINWIDTH*0.538,WINHEIGHT*0.19))
+    WIN.blit(invstat1,( WINWIDTH*0.05,WINHEIGHT*0.66))
+    WIN.blit(redbox,i[0])
+    drawslot()
+    player_inventory()
+
+def drawinventory():
+    global inventory
+    global keystart
+    global yesno
+    global removing
+    global eating
+    i=listinlist(listinlist(information.inventorylist,ypos),xpos)
+    WIN.blit(inv,(0,0))
+    WIN.blit(invstat, ( WINWIDTH*0.538,WINHEIGHT*0.19))
+    WIN.blit(invstat1,( WINWIDTH*0.05,WINHEIGHT*0.66))
+    WIN.blit(redbox,i[0])
+    keynow = time.time()
+
+    keys_pressed = pygame.key.get_pressed()
+    if keys_pressed[pygame.K_UP] and (keystart + 0.25) < (keynow):#up
+        if ypos != 0:
+            move("up")
+            keystart = time.time()
+    if keys_pressed[pygame.K_RIGHT] and (keystart + 0.25) < (keynow):
+        if xpos != 3:
+            move("right")
+            keystart = time.time()
+    if keys_pressed[pygame.K_DOWN] and (keystart + 0.25) < (keynow):
+        if ypos != 2:
+            move("down")
+            keystart = time.time()
+    if keys_pressed[pygame.K_LEFT] and (keystart + 0.25) < (keynow):
+        if xpos != 0:
+            move("left")
+            keystart = time.time()
+    if keys_pressed[pygame.K_r] and (keystart + 0.25) < (keynow):
+        yesno = "waiting"
+        removing = True
+        keystart = time.time()
+    if yesno and removing and(keystart + 0.25) < (keynow):
+        remove()
+        yesno = False
+        removing = False
+        keystart = time.time()
+    if keys_pressed[pygame.K_i] and (keystart + 0.25) < (keynow):
+        inventory = False
+        keystart = time.time()
+    if keys_pressed[pygame.K_c] and (keystart + 0.25) < (keynow):
+        yesno = "waiting"
+        eating = True
+        keystart = time.time()
+    if yesno and eating and(keystart + 0.25) < (keynow):
+        consume()
+        yesno = False
+        eating = False
+        keystart = time.time()
+    if keys_pressed[pygame.K_e] and (keystart + 0.25) < (keynow):
+        equip()
+        keystart = time.time()
+    if keys_pressed[pygame.K_g] and (keystart + 0.25) < (keynow):
+        getitem(information.splint)
+        keystart = time.time()
+    if keys_pressed[pygame.K_t] and (keystart + 0.25) < (keynow):
+        re_sort()
+        keystart = time.time()
+
+    drawslot()
+    player_inventory()
+    pygame.display.flip()
+
+def consume():
+    i=listinlist(listinlist(information.inventorylist,ypos),xpos)
+    if i[4] == "consumable":
+        player["hp"] = player["hp"] + i[1]
+        if player["hp"] > 10:
+            player["hp"] = 10
+        remove()
+
+def equip():
+    i=listinlist(listinlist(information.inventorylist,ypos),xpos)
+    if i[4] == "nonconsumable" and player["armor"] != i[1] and player["dmg"] != i[1]:
+        if i[2] == "chainmail":
+            player["armor"] = i[1]
+        if i[2] == "splint":
+            player["armor"] = i[1]
+        if i[2] == "half plate armor":
+            player["armor"] = i[1]
+        if i[2] == "plate armor":
+            player["armor"] = i[1]
+        if i[2] == "dagger":
+            player["dmg"] = i[1]
+        if i[2] == "pickaxe":
+            player["dmg"] = i[1]
+        if i[2] == "axe":
+            player["dmg"] = i[1]
+        if i[2] == "sword":
+            player["dmg"] = i[1]
+    elif i[4] == "nonconsumable" and player["armor"] == i[1]:
+        player["armor"] = 0
+    elif i[4] == "nonconsumable" and player["dmg"] == i[1]:
+        player["dmg"] = 1
+
+def move(direction):
+    global xpos
+    global ypos
+    if direction=="up":
+        ypos=ypos-1
+    if direction=="right":
+        xpos=xpos+1
+    if direction=="down":
+        ypos=ypos+1
+    if direction=="left":
+        xpos=xpos-1
+
+def tail(list):
+    b = []
+    for x in range (len(list)):
+        b.append(list[x])
+    b.pop(0)
+    return b
+
+def remove():
+    i=listinlist(listinlist(information.inventorylist,ypos),xpos)
+    if i[4] == "nonconsumable" and player["armor"] == i[1]:
+        player["armor"] = 0
+    if i[4] == "nonconsumable" and player["dmg"] == i[1]:
+        player["dmg"] = 1
+    if i[1] == "empty":
+        pass
+    elif i[5] > 1:
+        i[5] = i[5] - 1
+        information.changeslot(ypos,xpos,tail(i))
+    else:
+        list = ["empty","empty","empty","empty",0]
+        information.changeslot(ypos,xpos,list)
+        re_sort()
+
+def getitem(pickedupitem):
+    global keystart
+    keynow = time.time()
+    for y in range (3):
+        for x in range (4):
+            i=listinlist(listinlist(information.inventorylist,y),x)
+            if i[1] == "empty" and i[2] != pickedupitem[1] and (keystart + 0.25) < (keynow):
+                keystart = time.time()
+                information.changeslot(y,x,pickedupitem)
+                return None
+            elif i[2] == pickedupitem[1] and (keystart + 0.25) < (keynow):
+                keystart = time.time()
+                i[5] = i[5] + 1
+                information.changeslot(y,x,tail(i))
+                return None
+
+def re_sort():
+    for y in range (2,-1,-1):
+        for x in range (3,-1,-1):
+            i=listinlist(listinlist(information.inventorylist,y),x)
+            if i[1] != "empty":
+                copy = i.copy()
+                sortremove(y,x)
+                getitem(tail(copy))
+                return None
+
+def sortremove(y,x):
+    i=listinlist(listinlist(information.inventorylist,y),x)
+    list = ["empty","empty","empty","empty",0]
+    information.changeslot(y,x,list)
+
+def drawslot():
+    for y in range(3):
+        for x in range(4):
+            i=listinlist(listinlist(information.inventorylist,y),x)
+            if i[3]!="empty":
+                image=i[3]
+                image=pygame.transform.scale(image,((WINWIDTH*0.085,WINHEIGHT*0.14)))
+                WIN.blit(image, i[0])
+                my_font = pygame.font.SysFont('Comic Sans MS', 30)
+                text_surface = my_font.render(str(i[5]), False, (0, 0, 0))
+                WIN.blit(text_surface, i[0])
 ########################################################################################
         
 # Combat
@@ -84,15 +324,17 @@ firstcombat = True
 def damage(attacked,dmg):
     if attacked == "player":
         global player
-        player["hp"] = player["hp"] - dmg
-        print(player["hp"])
+        if dmg > player["armor"]/10:
+            player["hp"] = player["hp"] - (dmg - player["armor"]/10)
     else:
         global enemyhp
         enemyhp = (enemyhp - dmg)
-        print(enemyhp)
 
 def openinventory():
-    pass
+    global keystart
+    keystart = time.time()
+    global inventory
+    inventory = True
 
 def combat(enemy):
     global keynow
@@ -143,6 +385,7 @@ def playervictory(enemy):
     firstcombat = True
     i = listinlist(listinlist(listinlist(information.map,currentlocationy),currentlocationx),13)
     information.kill(i[4])
+    normal_music()
 
 def initiatecombat(enemy):
     global fighttext
@@ -154,6 +397,7 @@ def initiatecombat(enemy):
     elif player["hp"]<1:
         firstcombat = True
         load_checkpoint()
+        normal_music()
         
 def draw_combat():
     draw_background()
@@ -166,6 +410,7 @@ def draw_combat():
     global firstcombat
     i = listinlist(listinlist(listinlist(information.map,currentlocationy),currentlocationx),13)
     if firstcombat:
+        battle_music()
         enemyhp = i[1]
         firstcombat = False
     initiatecombat(i[3])
@@ -188,32 +433,33 @@ def combat_update_text():
             fighttext[0] = ""
             textboxindex = 0
     else:
-        textboxindex += 1
+        textboxindex = 0
 
 def enemy_hp():
-    heart = pygame.image.load(information.heart).convert_alpha()
+    heart = pygame.image.load("blackheart.png").convert_alpha()
     heart_sprite = spritesheet.SpriteSheet(heart)
-    heart = heart_sprite.get_image(0, 0, 778, 594, (1/10), (255, 255, 255))
+    heart = heart_sprite.get_image(0, 0, 862, 778, (1/10), (255, 255, 255))
     for x in range (enemyhp):
-        WIN.blit(heart, (5+((x)*80),(WINHEIGHT - (WINHEIGHT/6)) - 60))
+        WIN.blit(heart, (5+((x)*100),(WINHEIGHT - (WINHEIGHT/6)) - 80))
 
 def load_enemy():
     i = listinlist(listinlist(listinlist(information.map,currentlocationy),currentlocationx),13)
     enemy = i[0]
-    enemy = pygame.transform.scale(enemy, (WINWIDTH/5, WINHEIGHT/6))
-    WIN.blit(enemy, (WINWIDTH/2 -(WINWIDTH/10), WINHEIGHT/2 -(WINHEIGHT/12)))
+    enemy = pygame.transform.scale(enemy, (WINWIDTH/3, WINHEIGHT/3))
+    WIN.blit(enemy, (WINWIDTH*0.3 , WINHEIGHT*0.4))
 
 ########################################################################################
 # Commonly used window functions
 
 def yesnofunction():
-
     global yesno
     i = listinlist(listinlist(information.map,currentlocationy),currentlocationx)
     a = i[9]
-    if a == "textbox":
+    if inventory:
+        fake_drawinventory()
+    elif a == "textbox":
         fake_draw_text_window()
-    if a == "path":
+    elif a == "path":
         fake_draw_choose_path()
 
     picture = WIN.copy()
@@ -229,7 +475,7 @@ def yesnofunction():
     keys_pressed = pygame.key.get_pressed()
     
     if keys_pressed[pygame.K_y]:
-        yesno = False
+        yesno = True
     elif keys_pressed[pygame.K_n]:
         yesno = False
     else:
@@ -380,18 +626,21 @@ def update_text():
     global textboxindex
     if textboxindex != 0:
         if textboxindex == (len(textbox)-1):
-            x = textboxindex
             textboxindex = 0
         else:
-            x = textboxindex
             textboxindex += 1
     else:
-        x = textboxindex
         textboxindex += 1
 
 ########################################################################################
 
 def draw_choose_path():
+    global keystart
+    keynow = time.time()
+    keys_pressed = pygame.key.get_pressed()
+    if keys_pressed[pygame.K_i] and (keystart + 0.25) < (keynow): # i for inventory
+        openinventory()
+        keystart = time.time()
     draw_background()
     player_hp()
     path_objects()
@@ -528,13 +777,24 @@ def fade_out_screen():
 
 ########################################################################################
 
+def normal_music():
+    pygame.mixer.init()
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("game_music.wav")
+    pygame.mixer.music.play(-1)
+    
+def battle_music():
+    pygame.mixer.init()
+    pygame.mixer.music.stop()
+    pygame.mixer.music.load("battle_music.wav")
+    pygame.mixer.music.play(-1)
+
+########################################################################################
+
 # Pygame start function
 
 def graphics():
-    
-    pygame.mixer.init()
-    pygame.mixer.music.load("game_music.wav")
-    pygame.mixer.music.play(-1)
+    normal_music()
 
     clock = pygame.time.Clock()
     run = True
@@ -565,12 +825,14 @@ def graphics():
             yesnofunction()
         elif fadeyn:
             fade_waiting()
+        elif inventory:
+            drawinventory()
         elif i[9] == "textbox":
             draw_text_window()
         elif i[9] == "path":
             draw_choose_path()
         elif i[9] == "combat":
-            draw_combat()   
+            draw_combat()
     
     pygame.quit()
 
